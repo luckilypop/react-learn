@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>props基本使用</title>
+</head>
+<body>
+	<div id="text1"></div>
+	<div id="text2"></div>
+	<div id="text3"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		class Person extends React.Component{
+			render(){
+				const {name, sex, age} = this.props;
+				return (
+					<ul>
+						<li>姓名：{name}</li>
+						<li>性别：{sex}</li>
+						<li>年龄：{age}</li>	
+					</ul>
+				)
+			}
+		}
+
+		ReactDOM.render(<Person name = "tom" sex = "女" age = "18"/>, document.getElementById('text1'))
+
+		const p = {name:"jerry", sex:"女", age:"25"}
+		ReactDOM.render(<Person name={p.name} sex={p.sex} age={p.age}/>, document.getElementById('text2'))
+		
+		// 简写方式，只有键名称对应时候可用 
+		ReactDOM.render(<Person {...p}/>, document.getElementById('text3'))
+	</script>
+
+	
+</body>
+</html>

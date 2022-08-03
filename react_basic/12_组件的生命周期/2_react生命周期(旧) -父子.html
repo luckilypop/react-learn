@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2_react生命周期(旧)</title>
+</head>
+<body>
+	<div id="text"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+	<script type="text/babel">
+		
+		class A extends React.Component{
+			changeName = ()=>{
+				const {brand} = this.state
+				this.setState({brand:'奔驰'})
+			}
+			constructor(props){
+				console.log("A:constructor");
+				super(props);
+				this.state ={brand:'宝马'}
+			}
+			render(){
+				console.log("A:render");
+				return(
+					<div>
+						<h1>我是A组件</h1>
+						<button onClick={this.changeName}>点击换车</button>
+						{/* 向B中传入props */}
+						<B brand={this.state.brand}/>
+					</div>
+				)
+			}
+			componentWillMount(){
+				console.log("A:componentWillmount");
+			}
+			componentDidMount(){
+				console.log("A:componentDidMount");
+			}
+
+			componentWillUnmount(){
+				console.log("A:componentWillUnmount");
+			}
+
+			shouldComponentUpdate(){
+				console.log("A:shouldComponentUpdate");
+				return true
+			}
+			componentWillUpdate(){
+				console.log("A:componentWillUpdate");
+			}
+			componentDidUpdate(){
+				console.log("A:componentDidUpdate");
+			}
+		}
+		
+		class B extends React.Component{
+			render(){
+				console.log("B:render");
+				const {brand} = this.props
+				return(
+					<div>
+						<h1>我是B组件,我可以得到我父组件A的车品牌</h1>
+						<h1>我现在是{brand}</h1>
+					</div>
+				)
+
+			}
+			constructor(props){
+				console.log("B:constructor");
+				super(props);
+			}
+			componentWillReceiveProps(){
+				console.log("B:componentWillReceiveProps");
+			}
+			componentWillMount(){
+				console.log("B:componentWillmount");
+			}
+			componentDidMount(){
+				console.log("B:componentDidMount");
+			}
+
+			componentWillUnmount(){
+				console.log("B:componentWillUnmount");
+			}
+
+			shouldComponentUpdate(){
+				console.log("B:shouldComponentUpdate");
+				return true
+			}
+			componentWillUpdate(){
+				console.log("B:componentWillUpdate");
+			}
+			componentDidUpdate(){
+				console.log("B:componentDidUpdate");
+			}	
+
+		}
+		ReactDOM.render(<A/>, document.getElementById('text'))
+	</script>
+
+		
+</body>
+</html>

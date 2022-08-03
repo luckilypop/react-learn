@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>props基本使用</title>
+</head>
+<body>
+	<div id="text"></div>
+	
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		class Demo extends React.Component {
+			showDate = ()=> {
+				const {input1} = this;
+				alert(input1.value)
+			}
+
+			loseDate = ()=> {
+				const {input2} = this;
+				alert(input2.value)
+			}
+			// this添加一个属性input1
+			render(){
+				console.log(this)
+				return (
+					<div>
+						<input ref={c => this.input1 = c} type="text" placeholder="点击按钮提示数据"/>
+						<button onClick={this.showDate}>点我提示左侧的数据</button> 
+						<input ref={c => this.input2 = c} onBlur={this.loseDate} type="text" placeholder="失去焦点提示数据"/>
+					</div>
+				)
+			}
+		}
+
+		ReactDOM.render(<Demo />, document.getElementById('text'))
+	</script>
+
+	
+</body>
+</html>

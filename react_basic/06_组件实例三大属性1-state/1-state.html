@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06_组件实例三大属性1-state</title>
+</head>
+<body>
+    <div id="text"></div>
+
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        // state中，如果键值对中，值是true，不会显示
+        // 1. 类创建组件
+        class Weather extends React.Component {
+            //构造器调用几次？ ———— 1次
+            constructor(props) { // this：Weather 实例化对象
+                super(props);
+                // 初始化状态
+                this.state = {isHot:true, wind:'微风', rain:'无雨'};
+                // bind,更改this指向，
+                // 将changeWeather函数绑定在Weather实例化对象上，并更改名字为demo
+                this.demo = this.changeWeather.bind(this);
+            }
+
+            //render调用几次？ ———— 1+n次 1是初始化的那次 n是状态更新的次数
+            render() { // this：Weather 实例化对象
+                // 读取状态，该简略方法，键必须一致，相当于 const isHot = this.state.isHot
+                const {isHot, wind, rain} = this.state;
+                // 加事件，调用实例化对象的函数
+                return <h1 onClick={this.demo}>今天天气很{this.state.isHot ? '炎热' : '凉爽'}，且{wind},{rain}！</h1>
+            }
+
+            //changeWeather调用几次？ ———— 点几次调几次
+            changeWeather() { // 没有bind之前，this：undifined；bind之后，this为实例化对象
+                // 获取原先的isHot的值
+                const {isHot, wind} = this.state;
+                // 更改state中的值，不能使用this.state.isHot = !isHot直接更改；
+                // 需要借助内置的API
+                this.setState({isHot:!isHot, wind:'大风'})
+            }
+
+
+        }
+        
+        ReactDOM.render(<Weather />, document.getElementById('text'));
+    </script>
+</body>
+</html>
